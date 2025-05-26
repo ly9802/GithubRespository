@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Retrieval</title>
+</head>
+<body>
+<h1>Retrieve Historical Activity</h1>
+<h3>Input user id, start date, and end date</h3>
+ user_id (3 digital numbers): <input type="text" id="user"><br>
+ start date (year-month-day): <input type="date" id="startTime"><br>
+ end date (year-month-day):    <input type="date" id="endTime"><br>
+ <button onclick="getHistory()">retrieval</button> <br>
+ <pre id="output"></pre>
+  <script>
+     async function getHistory() {
+         const user_id=document.getElementById('user').value;
+         const start_time = document.getElementById('startTime').value;
+         const end_time = document.getElementById('endTime').value;
+         const res = await fetch('/history',{
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({user_id:user_id, start_date:start_time, end_date:end_time})
+      }
+      );
+         const data=await res.json()
+
+
+         let html = "<table border='1'><tr><th>user_id</th><th>date</th><th>hydration_liters</th><th>sleep_hours</th><th>exercise_minutes</th><th>meditation_minutes</th></tr>";
+         data.forEach(item => {
+             const d = new Date(item.date);
+             const dateOnly = d.toISOString().slice(0, 10);
+            html += `<tr>
+            <td>${item.user_id}</td>
+            <td>${dateOnly}</td>
+            <td>${item.hydration_liters}</td>
+            <td>${item.sleep_hours}</td>
+            <td>${item.exercise_minutes}</td>
+            <td>${item.meditation_minutes}</td>
+            </tr>`;
+            });
+      html += "</table>";
+
+      document.getElementById('output').innerHTML =html
+     }
+  </script>
+
+</body>
+</html>

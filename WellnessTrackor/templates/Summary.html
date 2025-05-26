@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Summary</title>
+</head>
+<body>
+<h1>show summary</h1>
+<h3>Input User ID</h3>
+ user_id (3 digital numbers): <input type="text" id="user"><br>
+period: <select id="period">
+        <option value="weekly">weekly</option>
+        <option value="daily">daily</option>
+
+        </select><br>
+<button onclick="getSummary()">get summary</button><br>
+<pre id="output"></pre>
+<script>
+    async function getSummary(){
+        const user_id=document.getElementById('user').value
+        const span = document.getElementById('period').value;
+
+        const res=await fetch('/summary', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({user_id:user_id, period:span})
+        }
+        );
+        document.getElementById('output').innerText = await res.text();
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wellness Track Application</title>
+</head>
+<body>
+
+<h1>Wellness Tracker</h1>
+  <h3>Log A Wellness Activity</h3>
+  user_id (3 digital numbers): <input type="text" id="user"><br>
+  date (year-month-day):       <input type="date" id="date"><br>
+  hydration (liters):          <input type="text" id="hydration"><br>
+  sleep (hours):               <input type="text" id="sleep"><br>
+  exercise (minutes):         <input type="text" id="exercise"><br>
+  meditation (minutes):       <input type="text" id="meditation"><br>
+  <button onclick="logActivity()">log a wellness activity</button> <br>
+  <pre id="output"></pre>
+
+  <h3>Sync Wearable Device Data</h3>
+  <button onclick="syncDevice()">sync wearable device data</button>
+  <pre id="output2"></pre>
+
+  <h3>Retrieve Historical Activity </h3>
+  <button onclick="location.href='/search'">retrieve historical activity</button>
+
+  <h3>Show Summary </h3>
+  <button onclick="location.href='/summary'">show summary</button>
+
+
+  <script>
+    async function logActivity() {
+      const user = document.getElementById("user").value;
+      const timestamp = document.getElementById("date").value;
+      const hydration = Number(document.getElementById("hydration").value);
+      const sleep = Number(document.getElementById("sleep").value);
+      const exercise = Number(document.getElementById("exercise").value);
+      const meditation = Number(document.getElementById("meditation").value);
+
+      const res = await fetch('/log-wellness-activity', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body:JSON.stringify({user_id:user,date:timestamp,hydration_liters:hydration,sleep_hours:sleep,exercise_minutes:exercise,meditation_minutes:meditation})
+      }
+      );
+      document.getElementById('output').innerText = await res.text();
+    }
+
+    async function syncDevice() {
+      const res = await fetch('/sync-device', {
+          method: 'POST'
+      });
+      document.getElementById('output2').innerText = await res.text();
+    }
+
+
+
+
+  </script>
+
+</body>
+</html>
