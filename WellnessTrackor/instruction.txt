@@ -1,7 +1,7 @@
 
 1. Download anaconda3 from website https://www.anaconda.com/download/success, 
 and then install anaconda3  
-2. Download mysql (mysql-5.7.31-winx64.zip) to C disk on the locall machine from website https://downloads.mysql.com/archives/community/ and then unzip it, use the configure file in the folder "MySQLConfig"(my.ini) to initialize mysql. 
+2. Download mysql (mysql-5.7.31-winx64.zip) to C disk on the local machine from website https://downloads.mysql.com/archives/community/ and then unzip it, use the configure file in the folder "MySQLConfig"(my.ini) to initialize mysql. 
 3. Create a passward "root123" for "root" user when starting mysql.
 4. Create a database named "wellness" in mysql
 5. In database "wellness", create a table named "userinfo" by using the following 7 columns: id(int primary key), user_id(varchar (50)), date (date), hydration_liters(float), sleep_hours(float), exercise_minutes(float), meditation_minutes(float)
